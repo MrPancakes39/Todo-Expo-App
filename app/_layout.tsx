@@ -29,12 +29,7 @@ export default function Layout() {
       <Stack.Screen name="+not-found" options={{ title: "Oops!" }} />
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="signup" options={{ headerShown: false }} />
-      <Stack.Screen
-        name="signin"
-        options={{
-          title: "Log In",
-        }}
-      />
+      <Stack.Screen name="signin" options={{ headerShown: false }} />
     </Stack>
   );
 }
