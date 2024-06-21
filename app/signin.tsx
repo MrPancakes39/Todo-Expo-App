@@ -3,12 +3,12 @@ import { useState } from "react";
 import { View, Text, Alert } from "react-native";
 import { z } from "zod";
 
+import { accountSchema } from "./signup";
+
 import { Button } from "~/components/Button";
 import { Container } from "~/components/Container";
 import { FieldInput } from "~/components/FieldInput";
 import { useAuth } from "~/lib/auth/useAuth";
-
-import { accountSchema } from "./signup";
 
 const loginSchema = accountSchema.pick({ email: true, password: true });
 
