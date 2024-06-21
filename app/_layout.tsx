@@ -1,13 +1,17 @@
 import "../global.css";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { View } from "react-native";
+
+import { AuthProvider } from "~/lib/auth/AuthProvider";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient();
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -25,11 +29,15 @@ export default function Layout() {
   }
 
   return (
-    <Stack>
-      <Stack.Screen name="+not-found" options={{ title: "Oops!" }} />
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="signup" options={{ headerShown: false }} />
-      <Stack.Screen name="signin" options={{ headerShown: false }} />
-    </Stack>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <Stack>
+          <Stack.Screen name="+not-found" options={{ title: "Oops!" }} />
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="signup" options={{ headerShown: false }} />
+          <Stack.Screen name="signin" options={{ headerShown: false }} />
+        </Stack>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
