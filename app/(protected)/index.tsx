@@ -9,6 +9,7 @@ import { Button } from "~/components/Button";
 import { Container } from "~/components/Container";
 import { TextInput } from "~/components/TextInput";
 import { useAuth } from "~/lib/auth/useAuth";
+import { cn } from "~/lib/cn";
 import type { Database } from "~/lib/supabase/database.types";
 import { useSupabase } from "~/lib/supabase/useSupabase";
 
@@ -105,6 +106,29 @@ export default function Page() {
     },
   });
 
+  // Toggle Todo Complete
+  const todoToggleCompleteMutation = useMutation({
+    mutationKey: ["todo-toggle-complete"],
+    mutationFn: async (item: Todo) => {
+      console.log("Toggling Todo Complete", item.id);
+      if (!user) throw new Error("User not logged in");
+      const { error } = await supabase
+        .from("todos")
+        .update({
+          is_complete: !item.is_complete,
+        })
+        .eq("id", item.id);
+      if (error) {
+        throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["todo-list"],
+      });
+    },
+  });
+
   function handleAddTodo() {
     if (todoInput.length === 0) {
       Alert.alert("Error", "Please enter a task");
@@ -157,6 +181,7 @@ export default function Page() {
                   setCurrentTodo(item);
                 }}
                 onDelete={() => todoDeleteMutation.mutate(item.id)}
+                checkTodo={() => todoToggleCompleteMutation.mutate(item)}
               />
             )}
             estimatedItemSize={50}
@@ -186,12 +211,24 @@ type TodoItemProps = {
   item: Todo;
   onEdit: () => void;
   onDelete: () => void;
+  checkTodo: () => void;
 };
 
-function TodoItem({ item, onEdit, onDelete }: TodoItemProps) {
+function TodoItem({ item, onEdit, onDelete, checkTodo }: TodoItemProps) {
   return (
     <View className="mb-2 flex flex-row items-center pl-1">
-      <Text className="text-md flex-1 text-white">{item.task}</Text>
+      <Button
+        onPress={checkTodo}
+        className="mr-2 p-1"
+        btnStyle={{
+          bg: ["bg-transparent", "bg-zinc-800"],
+          border: ["border-transparent", "border-transparent"],
+        }}>
+        <Feather name={item.is_complete ? "check-circle" : "circle"} size={20} color="#fff" />
+      </Button>
+      <Text className={cn("text-md flex-1 text-white", { "line-through": item.is_complete })}>
+        {item.task}
+      </Text>
       <Button
         onPress={onEdit}
         className="p-1"
