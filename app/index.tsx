@@ -1,7 +1,7 @@
 import { Image, Text, View } from "react-native";
 
-import { Button } from "~/components/ui/Button";
-import { Container } from "~/components/ui/Container";
+import { Button } from "~/components/Button";
+import { Container } from "~/components/Container";
 
 export default function Home() {
   return (

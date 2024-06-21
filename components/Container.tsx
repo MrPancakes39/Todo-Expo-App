@@ -1,6 +1,6 @@
 import { SafeAreaView } from "react-native";
 
-import { cn } from "~/utils/cn";
+import { cn } from "~/lib/cn";
 
 export const Container = ({
   className,

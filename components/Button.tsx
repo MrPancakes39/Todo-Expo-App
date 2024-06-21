@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Pressable, Text, View, type PressableProps } from "react-native";
 
-import { cn } from "~/utils/cn";
+import { cn } from "~/lib/cn";
 
 export type ButtonProps = React.PropsWithoutRef<PressableProps> & {
   children: string;
