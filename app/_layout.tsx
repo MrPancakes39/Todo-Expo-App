@@ -44,10 +44,13 @@ function StackLayout() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log({ isAuthenticated, segments });
     const isAuthGroup = segments[0] === "(protected)";
-
-    if (isAuthGroup && !isAuthenticated) {
+    // clear the history stack
+    if (router.canDismiss()) {
+      router.dismissAll();
+    }
+    // Go to the protected route if the user is authenticated
+    if (!isAuthenticated && isAuthGroup) {
       router.replace("/");
     } else if (isAuthenticated) {
       router.replace("/(protected)/");
