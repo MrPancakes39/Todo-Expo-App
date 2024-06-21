@@ -10,7 +10,14 @@ export default function Home() {
         <RNButton title="Hello 1" />
       </View>
       <Button className="mb-4">Hello 1</Button>
-      <Button intent="primary">Hello 2</Button>
+      <Button
+        btnColor={{
+          bg: ["bg-red-500", "bg-red-600"],
+          border: ["border-red-500", "border-red-600"],
+          text: "text-red-100",
+        }}>
+        Hello 2
+      </Button>
     </Container>
   );
 }
