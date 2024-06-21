@@ -6,21 +6,25 @@ import { cn } from "~/lib/cn";
 export type ButtonProps = PressableProps & {
   children: string;
   className?: string;
-  btnColor?: {
-    bg: [`bg-${string}`, `bg-${string}`];
-    border: [`border-${string}`, `border-${string}`];
-    text: `text-${string}`;
+  btnStyle?: {
+    bg?: [`bg-${string}`, `bg-${string}`];
+    border?: [`border-${string}`, `border-${string}`];
+    text?: string;
   };
 };
 
 export const Button = forwardRef<View, ButtonProps>(
-  ({ className, children, btnColor: customColor, ...props }, ref) => {
-    const colorDefault = customColor
-      ? cn(customColor.bg[0], customColor.border[0])
-      : "bg-gray-50 border-gray-50";
-    const colorPressed = customColor
-      ? cn(customColor.bg[1], customColor.border[1])
-      : "bg-gray-300 border-gray-300";
+  ({ className, children, btnStyle, ...props }, ref) => {
+    const bgColors =
+      btnStyle && btnStyle.bg ? btnStyle.bg : (["bg-gray-50", "bg-gray-300"] as const);
+    const borderColors =
+      btnStyle && btnStyle.border
+        ? btnStyle.border
+        : (["border-gray-50", "border-gray-300"] as const);
+    const textStyle = btnStyle && btnStyle.text ? btnStyle.text : "";
+
+    const colorDefault = `${bgColors[0]} ${borderColors[0]}`;
+    const colorPressed = `${bgColors[1]} ${borderColors[1]}`;
 
     const [btnColor, setBtnColor] = useState(colorDefault);
 
@@ -41,11 +45,7 @@ export const Button = forwardRef<View, ButtonProps>(
           props.onPressOut?.(...args);
           setBtnColor(colorDefault);
         }}>
-        <Text
-          className={cn(
-            "font-inter text-base font-semibold uppercase text-black",
-            customColor?.text
-          )}>
+        <Text className={cn("font-inter text-base font-semibold capitalize text-black", textStyle)}>
           {children}
         </Text>
       </Pressable>
