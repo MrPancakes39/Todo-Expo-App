@@ -4,7 +4,7 @@ import { Pressable, Text, type View, type PressableProps } from "react-native";
 import { cn } from "~/lib/cn";
 
 export type ButtonProps = PressableProps & {
-  children: string;
+  children: string | React.ReactNode;
   className?: string;
   btnStyle?: {
     bg?: [`bg-${string}`, `bg-${string}`];
@@ -45,9 +45,14 @@ export const Button = forwardRef<View, ButtonProps>(
           props.onPressOut?.(...args);
           setBtnColor(colorDefault);
         }}>
-        <Text className={cn("font-inter text-base font-semibold capitalize text-black", textStyle)}>
-          {children}
-        </Text>
+        {typeof children === "string" ? (
+          <Text
+            className={cn("font-inter text-base font-semibold capitalize text-black", textStyle)}>
+            {children}
+          </Text>
+        ) : (
+          children
+        )}
       </Pressable>
     );
   }

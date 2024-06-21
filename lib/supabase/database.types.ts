@@ -31,7 +31,6 @@ export type Database = {
       };
       todos: {
         Row: {
-          description: string;
           id: number;
           inserted_at: string;
           is_complete: boolean;
@@ -39,7 +38,6 @@ export type Database = {
           user_id: string;
         };
         Insert: {
-          description?: string;
           id?: number;
           inserted_at?: string;
           is_complete?: boolean;
@@ -47,7 +45,6 @@ export type Database = {
           user_id: string;
         };
         Update: {
-          description?: string;
           id?: number;
           inserted_at?: string;
           is_complete?: boolean;
