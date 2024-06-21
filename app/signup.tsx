@@ -12,7 +12,7 @@ function optionalName(name: string) {
   return name.length === 0 || name.length > 2;
 }
 
-const accountSchema = z.object({
+export const accountSchema = z.object({
   first_name: z
     .string()
     .trim()
