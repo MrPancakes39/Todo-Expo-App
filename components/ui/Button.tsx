@@ -23,10 +23,10 @@ export function Button({
 }: ButtonProps) {
   const colorDefault = customColor
     ? cn(customColor.bg[0], customColor.border[0])
-    : "bg-violet-400 border-violet-400";
+    : "bg-gray-50 border-gray-50";
   const colorPressed = customColor
     ? cn(customColor.bg[1], customColor.border[1])
-    : "bg-violet-500 border-violet-500";
+    : "bg-gray-300 border-gray-300";
 
   const [btnColor, setBtnColor] = useState(colorDefault);
 
@@ -47,7 +47,7 @@ export function Button({
         props.onPressOut?.(...args);
         setBtnColor(colorDefault);
       }}>
-      <Text className={cn("text-base font-semibold uppercase text-white", customColor?.text)}>
+      <Text className={cn("text-base font-semibold uppercase text-black", customColor?.text)}>
         {children}
       </Text>
     </Pressable>
