@@ -1,7 +1,8 @@
 import Feather from "@expo/vector-icons/Feather";
+import { BottomSheetModal, BottomSheetTextInput, BottomSheetView } from "@gorhom/bottom-sheet";
 import { FlashList } from "@shopify/flash-list";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { ActivityIndicator, Alert, ScrollView, Text, View } from "react-native";
 
 import { Button } from "~/components/Button";
@@ -15,6 +16,10 @@ type Todo = Database["public"]["Tables"]["todos"]["Row"];
 
 export default function Page() {
   const [todoInput, setTodoInput] = useState("");
+  // Bottom Sheet
+  const snapPoints = useMemo(() => ["20%", "100%"], []);
+  const sheetRef = useRef<BottomSheetModal>(null);
+  const [currentTodo, setCurrentTodo] = useState<Todo>({} as Todo);
 
   const { user } = useAuth();
   const supabase = useSupabase();
@@ -76,6 +81,30 @@ export default function Page() {
     },
   });
 
+  // Update Todo
+  const todoUpdateMutation = useMutation({
+    mutationKey: ["todo-update"],
+    mutationFn: async () => {
+      console.log("Updating Todo", currentTodo.id);
+      if (!user) throw new Error("User not logged in");
+      const { error } = await supabase
+        .from("todos")
+        .update({
+          task: currentTodo.task,
+        })
+        .eq("id", currentTodo.id);
+      if (error) {
+        throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["todo-list"],
+      });
+      sheetRef.current?.dismiss();
+    },
+  });
+
   function handleAddTodo() {
     if (todoInput.length === 0) {
       Alert.alert("Error", "Please enter a task");
@@ -124,7 +153,8 @@ export default function Page() {
               <TodoItem
                 item={item}
                 onEdit={() => {
-                  console.log("edit");
+                  sheetRef.current?.present();
+                  setCurrentTodo(item);
                 }}
                 onDelete={() => todoDeleteMutation.mutate(item.id)}
               />
@@ -133,6 +163,21 @@ export default function Page() {
           />
         ) : null}
       </ScrollView>
+      <BottomSheetModal
+        snapPoints={snapPoints}
+        enablePanDownToClose
+        ref={sheetRef}
+        handleIndicatorStyle={{ backgroundColor: "#fff" }}
+        backgroundStyle={{ backgroundColor: "#18181b" }}>
+        <BottomSheetView className="flex flex-row gap-6 px-4 py-2">
+          <BottomSheetTextInput
+            className="font-inter h-10 flex-1 rounded-md border border-zinc-600 bg-zinc-900 px-3 py-2 text-sm text-white"
+            value={currentTodo.task}
+            onChangeText={(text) => setCurrentTodo({ ...currentTodo, task: text })}
+          />
+          <Button onPress={() => todoUpdateMutation.mutate()}>Save</Button>
+        </BottomSheetView>
+      </BottomSheetModal>
     </Container>
   );
 }

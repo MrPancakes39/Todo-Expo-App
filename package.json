@@ -38,7 +38,8 @@
     "react-native-web": "~0.19.10",
     "tailwind-merge": "^2.3.0",
     "zod": "^3.23.8",
-    "@shopify/flash-list": "1.6.4"
+    "@shopify/flash-list": "1.6.4",
+    "@gorhom/bottom-sheet": "^4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

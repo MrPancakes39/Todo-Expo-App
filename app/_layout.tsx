@@ -1,10 +1,12 @@
 import "../global.css";
 
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Stack, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { AuthProvider } from "~/lib/auth/AuthProvider";
 import { useAuth } from "~/lib/auth/useAuth";
@@ -32,7 +34,11 @@ export default function Layout() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <StackLayout />
+        <GestureHandlerRootView>
+          <BottomSheetModalProvider>
+            <StackLayout />
+          </BottomSheetModalProvider>
+        </GestureHandlerRootView>
       </AuthProvider>
     </QueryClientProvider>
   );
