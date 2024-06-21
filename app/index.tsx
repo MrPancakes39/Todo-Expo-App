@@ -1,3 +1,4 @@
+import { Link } from "expo-router";
 import { Image, Text, View } from "react-native";
 
 import { Button } from "~/components/Button";
@@ -16,8 +17,12 @@ export default function Home() {
         </Text>
       </View>
       <View className="flex flex-row gap-10 px-8">
-        <Button className="flex-1">Login</Button>
-        <Button className="flex-1">Signup</Button>
+        <Link href="/signin" asChild>
+          <Button className="flex-1">Login</Button>
+        </Link>
+        <Link href="/signup" asChild>
+          <Button className="flex-1">Signup</Button>
+        </Link>
       </View>
     </Container>
   );
