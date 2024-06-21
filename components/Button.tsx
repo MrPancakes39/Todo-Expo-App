@@ -41,7 +41,11 @@ export const Button = forwardRef<View, ButtonProps>(
           props.onPressOut?.(...args);
           setBtnColor(colorDefault);
         }}>
-        <Text className={cn("text-base font-semibold uppercase text-black", customColor?.text)}>
+        <Text
+          className={cn(
+            "font-inter text-base font-semibold uppercase text-black",
+            customColor?.text
+          )}>
           {children}
         </Text>
       </Pressable>

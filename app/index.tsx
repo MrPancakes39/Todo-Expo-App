@@ -9,8 +9,8 @@ export default function Home() {
     <Container className="bg-black">
       <View className="flex flex-1 items-center justify-center">
         <Image source={require("~/assets/org.gnome.Todo.png")} className="mb-4 h-[96] w-[72]" />
-        <Text className="mb-6 text-2xl font-bold text-white">To-Do List App!</Text>
-        <Text className="text-md text-center text-gray-400">
+        <Text className="font-inter mb-6 text-2xl font-bold text-white">To-Do List App!</Text>
+        <Text className="text-md font-inter text-center font-medium text-gray-400">
           This is a simple todo list app built with Expo as a demo for what you can do with React
           Native. It implements Auth with Supabase, uses Expo Router for navigation, uses Tailwind
           CSS for styling, and uses Supabase as a postgres database for storing the todo items.
