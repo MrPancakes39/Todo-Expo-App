@@ -6,7 +6,8 @@ export default function ProtectedLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: "white",
-        tabBarActiveBackgroundColor: "#18181b",
+        tabBarInactiveBackgroundColor: "#18181b",
+        tabBarActiveBackgroundColor: "#27272a",
         tabBarIconStyle: {
           marginTop: 5,
         },
@@ -20,6 +21,14 @@ export default function ProtectedLayout() {
           headerShown: false,
           title: "Todos",
           tabBarIcon: ({ color }) => <Feather name="edit-3" size={24} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          headerShown: false,
+          title: "Profile",
+          tabBarIcon: ({ color }) => <Feather name="user" size={24} color={color} />,
         }}
       />
     </Tabs>

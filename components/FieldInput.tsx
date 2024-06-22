@@ -1,6 +1,6 @@
-import { Text, View, type TextInputProps } from "react-native";
+import { Text, View } from "react-native";
 
-import { TextInput } from "~/components/TextInput";
+import { TextInput, type TextInputProps } from "~/components/TextInput";
 import { cn } from "~/lib/cn";
 
 type FieldInputProps = {
@@ -20,7 +20,7 @@ export function FieldInput({
   return (
     <View className={cn("flex flex-col", className)}>
       <View className="flex flex-row items-center justify-between">
-        <Text className="font-inter text-base font-bold text-white">{label}</Text>
+        <Text className="mb-1 font-inter text-base font-bold text-white">{label}</Text>
         {isRequired && <Text className="text-red-500">*</Text>}
       </View>
       <TextInput placeholder={placeholder} {...inputProps} />

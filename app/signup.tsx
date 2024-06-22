@@ -65,7 +65,7 @@ export default function Signup() {
 
   return (
     <Container className="items-center justify-center bg-black">
-      <Text className="font-inter text-center text-2xl font-bold capitalize text-white">
+      <Text className="text-center font-inter text-2xl font-bold capitalize text-white">
         Create your account
       </Text>
       <Text className="mb-8 text-base text-gray-300">
